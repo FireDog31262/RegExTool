@@ -1,0 +1,1 @@
+{"version":3,"sources":["boot.ts"],"names":[],"mappings":";AAEA,yCAA2B,mCAAmC,CAAC,CAAA;AAC/D,oBAA2B,OAAO,CAAC,CAAA;AAEnC,oCAAS,CAAC,kBAAY,CAAC,CAAC","file":"boot.js","sourcesContent":["\r\n\r\nimport {bootstrap}    from '@angular/platform-browser-dynamic';\r\nimport {AppComponent} from './app';\r\n\r\nbootstrap(AppComponent);"],"sourceRoot":"/source/"}
