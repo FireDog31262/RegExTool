@@ -35,13 +35,13 @@ gulp.task("scriptsNStyles", () => {
 //ts - task to transpile TypeScript files to JavaScript using Gulp-TypeScript 
 var tsProject = ts.createProject('tsconfig.json');
 gulp.task('ts', function(done) {    
-    // var tsResult = gulp.src([
-    //         "scripts/*.ts"
-    //     ])
-    //     .pipe(ts(tsProject), undefined, ts.reporter.fullReporter());
+    var tsResult = gulp.src([
+            "scripts/*.ts"
+        ])
+        .pipe(ts(tsProject), undefined, ts.reporter.fullReporter());
 
-    var tsResult = tsProject.src() // instead of gulp.src(...) 
-        .pipe(ts(tsProject));
+    // var tsResult = tsProject.src() // instead of gulp.src(...) 
+    //     .pipe(ts(tsProject));
  
     return tsResult.js.pipe(gulp.dest('./wwwroot/js'));
 });
