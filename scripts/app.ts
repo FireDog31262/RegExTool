@@ -1,8 +1,14 @@
 import {Component} from '@angular/core'; 
+import {Main} from './containers/index';
 
 @Component({
     selector: 'my-app',
-    template: `<h2> My Skills are : {{mySkill }}</h2>`
+    directives:[
+        Main
+    ],
+    template: `
+        <main-container></main-container>
+    `
 })
 export class AppComponent {
     mySkill: string;

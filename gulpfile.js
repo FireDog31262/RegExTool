@@ -14,19 +14,19 @@ gulp.task('clean', function() {
 //Moves Angular 2 & related scripts to wwwroot folder of ASP.NET Core app
 gulp.task("scriptsNStyles", () => {
     gulp.src([
-            'es6-shim/es6-shim.min.js',
-            'systemjs/dist/system-polyfills.js',
-            'systemjs/dist/system.src.js',
-            'reflect-metadata/Reflect.js',
-            'rxjs/**',
-            'zone.js/dist/**',
-            'angular2/**',
-            'jquery/dist/jquery.*js',
-            'bootstrap/dist/js/bootstrap*.js',
-        ], {
-            cwd: "node_modules/**"
-        })
-        .pipe(gulp.dest("./wwwroot/libs"));
+        'es6-shim/es6-shim.min.js',
+        'systemjs/dist/system-polyfills.js',
+        'systemjs/dist/system.src.js',
+        'reflect-metadata/Reflect.js',
+        'rxjs/**',
+        'zone.js/dist/**',
+        '@angular/**',
+        'jquery/dist/jquery.*js',
+        'bootstrap/dist/js/bootstrap*.js'
+    ], {
+        cwd: "node_modules/**"
+    })
+    .pipe(gulp.dest("./wwwroot/libs"));
 
     gulp.src([
         'node_modules/bootstrap/dist/css/bootstrap.css'
@@ -34,7 +34,7 @@ gulp.task("scriptsNStyles", () => {
 });
 
 //ts - task to transpile TypeScript files to JavaScript using Gulp-TypeScript 
-var tsProject = ts.createProject('tsconfig.json', {noResolve: true});
+var tsProject = ts.createProject('tsconfig.json');
 gulp.task('ts', function(done) {
     return tsProject.src()
         .pipe(sourceMaps.init())
