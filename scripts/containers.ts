@@ -1,0 +1,1 @@
+export {Main} from './containers/main';
