@@ -4,7 +4,7 @@
     "inputFiles": [
       "css/site.css"
     ]
-  },
+  }//,
 //   {
 //     "outputFileName": "wwwroot/js/site.min.js",
 //     "inputFiles": [

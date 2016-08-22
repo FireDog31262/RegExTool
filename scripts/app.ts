@@ -17,11 +17,4 @@ import {Main} from './containers';
         <main-container class=mainContainer></main-container>
     `
 })
-export class AppComponent {
-    mySkill: string;
-    skills = ['ASP.NET Core 1.0', 'Angular', 'C#', 'SQL', 'JSON'];
-
-    constructor() {
-        this.mySkill = this.skills[1];
-    }
-}
+export class AppComponent {}

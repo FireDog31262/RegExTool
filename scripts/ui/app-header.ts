@@ -9,7 +9,7 @@ import {Component} from '@angular/core';
             font-weight: 400;
             display: inline-block;
             vertical-align: middle;
-            color: #6CF;
+            color: #5CC;
         }
     `],
     template: `

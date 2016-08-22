@@ -29,7 +29,8 @@ gulp.task("scriptsNStyles", () => {
     .pipe(gulp.dest("./wwwroot/libs"));
 
     gulp.src([
-        'node_modules/bootstrap/dist/css/bootstrap.css'
+        'node_modules/bootstrap/dist/css/bootstrap.css',
+        'css/*.css'
     ]).pipe(gulp.dest('./wwwroot/libs/css'));
 });
 

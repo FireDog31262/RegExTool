@@ -14,10 +14,10 @@ namespace RegExTool.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{id}/{value}")]
+        public JsonResult Get(int id, string value)
         {
-            return "value";
+            return Json(new { id = id, value = value});;
         }
 
         // POST api/values

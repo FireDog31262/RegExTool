@@ -54,7 +54,7 @@
   },
 
   "scripts": {
-    "precompile": [ "tsc -p tsconfig.json",  "dotnet bundle" ],
+    "precompile": [ "tsc -p tsconfig.json"], //,  "dotnet bundle" ],
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   },
 
