@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 @Component({
     selector: 'regex-editor',
@@ -37,10 +37,12 @@ import {Component} from '@angular/core';
     `
 })
 export class RegExEditor {
+    @Input() matches = [];
+    @Output() getMatches = new EventEmitter();
+
     model = {
         expression: '[A-Z]',
-        text: 'Testing Testing',
-        matches: 2
+        text: 'Testing Testing'
     }
 
     onKeyUp (event) {
@@ -48,6 +50,7 @@ export class RegExEditor {
         if(expression.length > 0){
             console.log('Expession Text = ' + expression);
             console.log('Expression is valid ' + this.isValid(expression));
+            this.getMatches.next(this.model);
         }
     }
 
