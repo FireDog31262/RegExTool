@@ -8,6 +8,7 @@
         "outDir": "./wwwroot/js/",
         "removeComments": false,
         "sourceMap": true,
+        "inlineSources": true,
         "target": "es5",
         "moduleResolution": "node",
         "suppressImplicitAnyIndexErrors": true

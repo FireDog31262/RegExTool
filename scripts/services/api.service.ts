@@ -10,22 +10,23 @@ export class ApiService {
         'Content-Type': 'application/json',
         Accept: 'application/json'
     });
-    api_url: string = '/api/checkRegEx';
+    api_url: string = '/api/RegExApi';
 
     constructor(private http: Http) {}
 
     private getJson(response: Response) {
+         
         return response.json();
     }
 
     private checkForError(response: Response): Response | Observable<any> {
         if (response.status >= 200 && response.status < 300) {
-        return response;
+            return response;
         } else {
-        var error = new Error(response.statusText)
-        error['response'] = response;
-        console.error(error);
-        throw error;
+            var error = new Error(response.statusText)
+            error['response'] = response;
+            console.error(error);
+            throw error;
         }
     }
 

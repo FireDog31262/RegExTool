@@ -25,6 +25,9 @@ namespace RegExTool
         {
             // Add framework services.
             services.AddMvc();
+
+            //Sample Repostitory DI configuration
+            //services.AddSingleton<IRegexRepository, RegexRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

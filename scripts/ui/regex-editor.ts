@@ -5,6 +5,7 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
     styles:[`
         .title, .expression, .textTitle, .text {
             padding: .5rem;
+            position: relative;
         }
         .title {
             background: #5CC;
@@ -17,21 +18,41 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
             height: 70vh;
             overflow-y: scroll;
         }
-        .text textarea {
-            width: 100%
-            height: 100%;
+        input, 
+        textarea,
+        input:focus, 
+        textarea:focus { border: none; }
+        input { width: 80vw; }
+        textarea {
+            width: 95vw;
+            height: 70vh;
+            max-width: 95vw;
+            max-height: 70vh;
             display: block;
+        }
+        .matches {
+            background: #5CC;
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: .75rem;
+            margin: .175rem .75rem .125rem .125rem;
+            padding: .3rem;
+            border-radius: 5px;
+            cursor: default;
+            z-index: 3;
         }
     `],
     template: `
         <form>
             <div class="title">Expression</div>
             <div class="expression">
-                <input name="expression" [(ngModel)]="model.expression" (keyup)="onKeyUp($event)" />
+                <input name="Expression" [(ngModel)]="model.Expression" (keyup)="onKeyUp($event)" />
+                <div class="matches" *ngIf="matches.length > 0">{{matches.length}} matches</div>
             </div>
             <div class="textTitle">Text</div>
             <div class="text">
-                <textarea name="text" [(ngModel)]="model.text"></textarea>
+                <textarea class="textToMatch" name="Text" [(ngModel)]="model.Text"></textarea>
             </div>
         </form>
     `
@@ -41,8 +62,8 @@ export class RegExEditor {
     @Output() getMatches = new EventEmitter();
 
     model = {
-        expression: '[A-Z]',
-        text: 'Testing Testing'
+        Expression: '[A-Z]\\w+',
+        Text: 'Testing Testing'
     }
 
     onKeyUp (event) {
@@ -50,6 +71,7 @@ export class RegExEditor {
         if(expression.length > 0){
             console.log('Expession Text = ' + expression);
             console.log('Expression is valid ' + this.isValid(expression));
+             
             this.getMatches.next(this.model);
         }
     }
