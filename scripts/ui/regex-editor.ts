@@ -84,7 +84,7 @@ export class RegExEditor {
             .debounceTime(500)
             .distinctUntilChanged()
             .subscribe((expression: string) => {
-                if(expression.length > 0){
+                if(expression.length > 3){
                     this.model.Expression = expression;
                     this.getMatches.next(this.model);
                 }
@@ -95,7 +95,7 @@ export class RegExEditor {
             .debounceTime(500)
             .distinctUntilChanged()
             .subscribe((text: string) => {
-                if(text.length > 0) {
+                if(text.length > 3) {
                     this.model.Text = text;
                     this.getMatches.next(this.model);
                 }
@@ -103,5 +103,5 @@ export class RegExEditor {
     }
 
     //testing purposes
-    ngDoCheck() { console.log('change detection'); }
+    // ngDoCheck() { console.log('change detection'); }
 }
