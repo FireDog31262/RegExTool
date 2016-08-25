@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
+import 'codemirror/lib/codemirror';
 // import 'rxjs/add/operator/debounceTime';
 // import 'rxjs/add/operator/throttleTime';
 // import 'rxjs/add/observable/fromEvent';
@@ -63,7 +64,7 @@ import {Observable} from 'rxjs/Observable';
             </div>
             <div class="textTitle">Text</div>
             <div class="text">
-                <textarea class="textToMatch" [value]="model.Text" [formControl]="text"></textarea>
+                <textarea #text class="textToMatch" [value]="model.Text" [formControl]="text"></textarea>
             </div>
         </form>
     `
@@ -73,6 +74,8 @@ export class RegExEditor {
     @Output() getMatches = new EventEmitter();
     expression = new FormControl();
     text = new FormControl();
+    myCodeMirror: any;
+    @ViewChild('text') myTextArea: ElementRef;
 
     model = {
         Expression: '[A-Z]\\w+',
@@ -100,6 +103,8 @@ export class RegExEditor {
                     this.getMatches.next(this.model);
                 }
             })
+
+        this.myCodeMirror = CodeMirror.fromTextArea(this.myTextArea.nativeElement);
     }
 
     //testing purposes
