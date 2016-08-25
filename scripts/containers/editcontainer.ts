@@ -25,7 +25,7 @@ export class EditContainer {
         console.log('onGetMatches model = ' + JSON.stringify(model));
         this.service.getMatches(model)
             .subscribe(res => {
-                 
+                console.log('Mathes = ' + JSON.stringify(res));
                 this.matches = res;
             });
     }

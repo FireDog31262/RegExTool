@@ -1,4 +1,19 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {
+    Component, 
+    Input, 
+    Output, 
+    EventEmitter,
+    NgZone,
+    ChangeDetectorRef,
+    ApplicationRef,
+    ViewChild,
+    ElementRef
+} from '@angular/core';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs/Observable';
+// import 'rxjs/add/operator/debounceTime';
+// import 'rxjs/add/operator/throttleTime';
+// import 'rxjs/add/observable/fromEvent';
 
 @Component({
     selector: 'regex-editor',
@@ -18,10 +33,6 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
             height: 70vh;
             overflow-y: scroll;
         }
-        input, 
-        textarea,
-        input:focus, 
-        textarea:focus { border: none; }
         input { width: 80vw; }
         textarea {
             width: 95vw;
@@ -47,42 +58,50 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
         <form>
             <div class="title">Expression</div>
             <div class="expression">
-                <input name="Expression" [(ngModel)]="model.Expression" (keyup)="onKeyUp($event)" />
-                <div class="matches" *ngIf="matches.length > 0">{{matches.length}} matches</div>
+                <input [value]="model.Expression" [formControl]="expression"/>
+                <div class="matches" *ngIf="matches.length">{{matches.length}} matches</div>
             </div>
             <div class="textTitle">Text</div>
             <div class="text">
-                <textarea class="textToMatch" name="Text" [(ngModel)]="model.Text"></textarea>
+                <textarea class="textToMatch" [value]="model.Text" [formControl]="text"></textarea>
             </div>
         </form>
     `
 })
 export class RegExEditor {
-    @Input() matches = [];
+    @Input() matches: Observable<Array<string>>;
     @Output() getMatches = new EventEmitter();
+    expression = new FormControl();
+    text = new FormControl();
 
     model = {
         Expression: '[A-Z]\\w+',
         Text: 'Testing Testing'
     }
 
-    onKeyUp (event) {
-        var expression = event.target.value;
-        if(expression.length > 0){
-            console.log('Expession Text = ' + expression);
-            console.log('Expression is valid ' + this.isValid(expression));
-             
-            this.getMatches.next(this.model);
-        }
+    ngOnInit() {
+        this.expression.valueChanges
+            .debounceTime(500)
+            .distinctUntilChanged()
+            .subscribe((expression: string) => {
+                if(expression.length > 0){
+                    this.model.Expression = expression;
+                    this.getMatches.next(this.model);
+                }
+            });
+
+
+        this.text.valueChanges
+            .debounceTime(500)
+            .distinctUntilChanged()
+            .subscribe((text: string) => {
+                if(text.length > 0) {
+                    this.model.Text = text;
+                    this.getMatches.next(this.model);
+                }
+            })
     }
 
-    private isValid(expr: string){
-        var isvalid: boolean = true;
-        try {
-            new RegExp(expr);
-        } catch (e) {
-            isvalid = false;
-        }
-        return isvalid;
-    }
+    //testing purposes
+    ngDoCheck() { console.log('change detection'); }
 }
