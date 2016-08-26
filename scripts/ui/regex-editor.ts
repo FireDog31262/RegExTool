@@ -3,18 +3,11 @@ import {
     Input, 
     Output, 
     EventEmitter,
-    NgZone,
-    ChangeDetectorRef,
-    ApplicationRef,
     ViewChild,
     ElementRef
 } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
-import 'codemirror/lib/codemirror';
-// import 'rxjs/add/operator/debounceTime';
-// import 'rxjs/add/operator/throttleTime';
-// import 'rxjs/add/observable/fromEvent';
 
 @Component({
     selector: 'regex-editor',
@@ -31,17 +24,12 @@ import 'codemirror/lib/codemirror';
             background: #CCC;
         }
         .text {
-            height: 70vh;
+            height: 100vh;
+            width: 98.9%;
             overflow-y: scroll;
+            overflow-x: hidden
         }
         input { width: 80vw; }
-        textarea {
-            width: 95vw;
-            height: 70vh;
-            max-width: 95vw;
-            max-height: 70vh;
-            display: block;
-        }
         .matches {
             background: #5CC;
             position: absolute;
@@ -64,7 +52,7 @@ import 'codemirror/lib/codemirror';
             </div>
             <div class="textTitle">Text</div>
             <div class="text">
-                <textarea #text class="textToMatch" [value]="model.Text" [formControl]="text"></textarea>
+                <textarea #text class="textToMatch" [value]="model.Text"></textarea>
             </div>
         </form>
     `
@@ -73,7 +61,6 @@ export class RegExEditor {
     @Input() matches: Observable<Array<string>>;
     @Output() getMatches = new EventEmitter();
     expression = new FormControl();
-    text = new FormControl();
     myCodeMirror: any;
     @ViewChild('text') myTextArea: ElementRef;
 
@@ -92,19 +79,29 @@ export class RegExEditor {
                     this.getMatches.next(this.model);
                 }
             });
+    }
 
-
-        this.text.valueChanges
+    ngAfterViewInit() {
+        //this needs to be setup after the view is initialized 
+        //to ensure that the textarea element has been initialized 
+        Observable.fromEvent(this.myTextArea.nativeElement, 'change')
             .debounceTime(500)
-            .distinctUntilChanged()
-            .subscribe((text: string) => {
-                if(text.length > 3) {
-                    this.model.Text = text;
-                    this.getMatches.next(this.model);
-                }
-            })
+            .subscribe((event: any) => {
+                this.model.Text = (<HTMLTextAreaElement>event.target).value;
+                this.getMatches.next(this.model);
+            });
 
+        //setup the codemirror editor
         this.myCodeMirror = CodeMirror.fromTextArea(this.myTextArea.nativeElement);
+        // this.myCodeMirror.setSize('100%', '100%');
+
+        //setup change event to pass changes to the 
+        //textarea and fire a change event on the textarea 
+        this.myCodeMirror.on('change', function(){ 
+            var changeEvent = new Event('change');
+            this.save();
+            this.getTextArea().dispatchEvent(changeEvent);
+        }.bind(this.myCodeMirror));
     }
 
     //testing purposes

@@ -5,6 +5,7 @@ body, html{
     width: 100vw;
     height: 100vh;
     margin: 0 auto;
+    overflow-y: hidden;
 }
 .myApp {
     display: block;
@@ -19,3 +20,8 @@ textarea, input {
     -moz-box-shadow: none;
     box-shadow: none;
 }
+.CodeMirror-scroll, 
+.CodeMirror-lines {
+    width: 100%;
+}
+.CodeMirror-hscrollbar { display: none!important; }

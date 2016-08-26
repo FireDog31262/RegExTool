@@ -23,7 +23,7 @@ gulp.task("scriptsNStyles", () => {
         '@angular/**',
         'jquery/dist/jquery.*js',
         'bootstrap/dist/js/bootstrap*.js',
-        'codemirror/lib/codemirror.js'
+        'codemirror/**'
     ], {
         cwd: "node_modules/**"
     })
