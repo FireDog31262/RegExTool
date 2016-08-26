@@ -25,3 +25,11 @@ textarea, input {
     width: 100%;
 }
 .CodeMirror-hscrollbar { display: none!important; }
+.CodeMirror pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+.CodeMirror { 
+    height: 100%;
+    word-wrap: break-word; 
+}
