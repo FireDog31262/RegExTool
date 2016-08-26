@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
-import {CodeMirror} from 'codemirror';
 
 @Component({
     selector: 'regex-editor',
@@ -92,11 +91,7 @@ export class RegExEditor {
                 this.getMatches.next(this.model);
             });
 
-<<<<<<< HEAD
-        debugger;
-=======
         //setup the codemirror editor
->>>>>>> 3088b37cec9b02ceaaa4f7d60bcbb0a0f4133044
         this.myCodeMirror = CodeMirror.fromTextArea(this.myTextArea.nativeElement);
         // this.myCodeMirror.setSize('100%', '100%');
 
