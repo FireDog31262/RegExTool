@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
-import 'codemirror/lib/codemirror';
+import {CodeMirror} from 'codemirror';
 // import 'rxjs/add/operator/debounceTime';
 // import 'rxjs/add/operator/throttleTime';
 // import 'rxjs/add/observable/fromEvent';
@@ -104,6 +104,7 @@ export class RegExEditor {
                 }
             })
 
+        debugger;
         this.myCodeMirror = CodeMirror.fromTextArea(this.myTextArea.nativeElement);
     }
 
