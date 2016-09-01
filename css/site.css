@@ -13,23 +13,16 @@ body, html{
     height: 100vh;
 }
 
-textarea, input {
+input {
     border: none;
     outline: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
 }
-.CodeMirror-scroll, 
-.CodeMirror-lines {
-    width: 100%;
+
+.CodeMirror,
+.CodeMirror-scroll {
+    width: 102%;
 }
-.CodeMirror-hscrollbar { display: none!important; }
-.CodeMirror pre {
-    white-space: pre-wrap;
-    word-wrap: break-word;
-}
-.CodeMirror { 
-    height: 100%;
-    word-wrap: break-word; 
-}
+

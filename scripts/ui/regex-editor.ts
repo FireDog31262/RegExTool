@@ -8,10 +8,14 @@ import {
 } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
+import {CodemirrorService} from '../services/codeMirror.service';
+import {HighLightService} from '../services/highLight.service';
 
 @Component({
     selector: 'regex-editor',
+    providers: [CodemirrorService],
     styles:[`
+        canvas{ position: absolute; }
         .title, .expression, .textTitle, .text {
             padding: .5rem;
             position: relative;
@@ -52,6 +56,7 @@ import {Observable} from 'rxjs/Observable';
             </div>
             <div class="textTitle">Text</div>
             <div class="text">
+                <canvas #canvas class="canvas"></canvas>
                 <textarea #text class="textToMatch" [value]="model.Text"></textarea>
             </div>
         </form>
@@ -63,6 +68,13 @@ export class RegExEditor {
     expression = new FormControl();
     myCodeMirror: any;
     @ViewChild('text') myTextArea: ElementRef;
+    @ViewChild('canvas') canvas: ElementRef;
+    hiLiter: HighLightService;
+
+    constructor(
+        private cmService: CodemirrorService,
+        private hiliteService: HighLightService
+    ) { }
 
     model = {
         Expression: '[A-Z]\\w+',
@@ -75,8 +87,10 @@ export class RegExEditor {
             .distinctUntilChanged()
             .subscribe((expression: string) => {
                 if(expression.length > 3){
+                    this.hiLiter.setCanvasSize();
                     this.model.Expression = expression;
                     this.getMatches.next(this.model);
+                    this.hiLiter.draw(this.matches);
                 }
             });
     }
@@ -87,13 +101,19 @@ export class RegExEditor {
         Observable.fromEvent(this.myTextArea.nativeElement, 'change')
             .debounceTime(500)
             .subscribe((event: any) => {
+                this.hiLiter.setCanvasSize();
                 this.model.Text = (<HTMLTextAreaElement>event.target).value;
                 this.getMatches.next(this.model);
+                this.hiLiter.draw(this.matches);
             });
-
+        
+        // debugger;
         //setup the codemirror editor
-        this.myCodeMirror = CodeMirror.fromTextArea(this.myTextArea.nativeElement);
-        // this.myCodeMirror.setSize('100%', '100%');
+        this.myCodeMirror = CodeMirror.fromTextArea(
+            this.myTextArea.nativeElement,
+            this.cmService.options
+        );
+        this.hiLiter = this.hiliteService.Init(this.myCodeMirror, this.canvas);
 
         //setup change event to pass changes to the 
         //textarea and fire a change event on the textarea 

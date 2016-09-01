@@ -5,6 +5,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HTTP_PROVIDERS } from '@angular/http';
 import {ApiService} from './services/api.service';
 import {RegExService} from './services/regex.service'
+import {CodemirrorService} from './services/codeMirror.service';
+import {HighLightService} from './services/highLight.service';
 import {AppComponent} from './app';
 
 @NgModule({
@@ -16,7 +18,9 @@ import {AppComponent} from './app';
     providers: [
         ...HTTP_PROVIDERS,
         ApiService,
-        RegExService
+        RegExService,
+        CodemirrorService,
+        HighLightService
     ],
     bootstrap: [AppComponent]
 })
