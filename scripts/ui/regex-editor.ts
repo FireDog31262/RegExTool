@@ -11,7 +11,7 @@ import {Observable} from 'rxjs/Observable';
 import {CodemirrorService} from '../services/codeMirror.service';
 import {HighLightService} from '../services/highLight.service';
 
-@Component({
+@Component({ 
     selector: 'regex-editor',
     providers: [CodemirrorService],
     styles:[`
