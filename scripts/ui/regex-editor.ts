@@ -63,7 +63,7 @@ import {HighLightService} from '../services/highLight.service';
     `
 })
 export class RegExEditor {
-    @Input() matches: Observable<Array<string>>;
+    @Input() matches: Observable<any>;
     @Output() getMatches = new EventEmitter();
     expression = new FormControl();
     myCodeMirror: any;
@@ -78,7 +78,17 @@ export class RegExEditor {
 
     model = {
         Expression: '[A-Z]\\w+',
-        Text: 'Testing Testing'
+        Text: `Welcome to the Regular Expression Tool!
+
+Edit the Expression & Text to see matches.
+
+This is Sample text for testing:
+abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ
+0123456789 _+-.,!@#$%^&*();\/|<>"'
+12345 -98.7 3.141 .6180 9,000 +42
+555.123.4567	+1-(800)-555-2468
+foo@demo.net	bar.ba@test.co.uk
+www.demo.com	http://foo.co.uk/`
     }
 
     ngOnInit() {
@@ -86,11 +96,11 @@ export class RegExEditor {
             .debounceTime(500)
             .distinctUntilChanged()
             .subscribe((expression: string) => {
-                if(expression.length > 3){
+                this.hiLiter.clear();
+                if(expression.length > 3) {
                     this.hiLiter.setCanvasSize();
                     this.model.Expression = expression;
-                    this.getMatches.next(this.model);
-                    this.hiLiter.draw(this.matches);
+                    this.getMatches.emit({filter: this.model, hiLiter: this.hiLiter});
                 }
             });
     }
@@ -101,10 +111,10 @@ export class RegExEditor {
         Observable.fromEvent(this.myTextArea.nativeElement, 'change')
             .debounceTime(500)
             .subscribe((event: any) => {
+                this.hiLiter.clear();
                 this.hiLiter.setCanvasSize();
                 this.model.Text = (<HTMLTextAreaElement>event.target).value;
-                this.getMatches.next(this.model);
-                this.hiLiter.draw(this.matches);
+                this.getMatches.emit({filter: this.model, hiLiter: this.hiLiter});
             });
         
         // debugger;
@@ -122,6 +132,12 @@ export class RegExEditor {
             this.save();
             this.getTextArea().dispatchEvent(changeEvent);
         }.bind(this.myCodeMirror));
+
+        this.myCodeMirror.on('keydown', () => {
+            this.hiLiter.clear();
+        })
+
+        this.getMatches.emit({filter: this.model, hiLiter: this.hiLiter});
     }
 
     //testing purposes

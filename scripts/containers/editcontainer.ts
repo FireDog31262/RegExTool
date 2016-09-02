@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {RegExEditor} from '../ui';
 import {RegExService} from '../services/regex.service';
+import {HighLightService} from '../services/highLight.service';
 
 @Component({
     selector: 'edit-container',
@@ -18,15 +19,19 @@ import {RegExService} from '../services/regex.service';
 })
 export class EditContainer {
     matches = [];
+    hiLiter: HighLightService;
+
     constructor(private service: RegExService) {}
 
-    onGetMatches(model) {
-         
+    onGetMatches(model: any) {
+        this.hiLiter = model.hiLiter;
         // console.log('onGetMatches model = ' + JSON.stringify(model));
-        this.service.getMatches(model)
+        this.service.getMatches(model.filter)
             .subscribe(res => {
                 // console.log('Mathes = ' + JSON.stringify(res));
                 this.matches = res;
+                this.hiLiter.clear();
+                this.hiLiter.draw(res);
             });
     }
 }
