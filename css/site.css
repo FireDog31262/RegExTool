@@ -25,5 +25,6 @@ input {
 .CodeMirror-scroll {
     width: 102%;
     background: transparent;
+    height: auto;
 }
 

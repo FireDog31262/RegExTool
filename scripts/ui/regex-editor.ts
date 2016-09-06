@@ -28,7 +28,7 @@ import {HighLightService} from '../services/highLight.service';
             background: #CCC;
         }
         .text {
-            height: 100vh;
+            height: calc(100vh - 185px);
             width: 98.9%;
             overflow-y: scroll;
             overflow-x: hidden
@@ -135,7 +135,14 @@ www.demo.com	http://foo.co.uk/`
 
         this.myCodeMirror.on('keydown', () => {
             this.hiLiter.clear();
-        })
+        });
+
+        var cm = document.getElementsByClassName('CodeMirror')[0];
+        Observable.fromEvent(cm, 'keyup')
+            .debounceTime(750)
+            .subscribe(() => {
+                this.getMatches.emit({filter: this.model, hiLiter: this.hiLiter});
+            });
 
         this.getMatches.emit({filter: this.model, hiLiter: this.hiLiter});
     }
