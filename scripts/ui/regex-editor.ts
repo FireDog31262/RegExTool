@@ -29,7 +29,7 @@ import {HighLightService} from '../services/highLight.service';
         }
         .text {
             height: calc(100vh - 185px);
-            width: 98.9%;
+            width: 98.6%;
             overflow-y: scroll;
             overflow-x: hidden
         }
