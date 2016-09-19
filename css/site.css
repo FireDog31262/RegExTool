@@ -28,3 +28,6 @@ input {
     height: auto;
 }
 
+.CodeMirror-code {
+    width: 99%;
+}
