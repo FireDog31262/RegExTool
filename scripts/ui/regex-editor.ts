@@ -51,7 +51,7 @@ import {HighLightService} from '../services/highLight.service';
         <form>
             <div class="title">Expression</div>
             <div class="expression">
-                <input [value]="model.Expression" [formControl]="expression"/>
+                <input [(ngModel)]="model.Expression" [formControl]="expression"/>
                 <div class="matches" *ngIf="matches.length">{{matches.length}} matches</div>
             </div>
             <div class="textTitle">Text</div>
