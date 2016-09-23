@@ -7,6 +7,7 @@ import {ApiService} from './services/api.service';
 import {RegExService} from './services/regex.service'
 import {CodemirrorService} from './services/codeMirror.service';
 import {HighLightService} from './services/highLight.service';
+import {LibraryViewService} from './services/libView.service';
 import {AppComponent} from './app';
 
 @NgModule({
@@ -20,7 +21,8 @@ import {AppComponent} from './app';
         ApiService,
         RegExService,
         CodemirrorService,
-        HighLightService
+        HighLightService,
+        LibraryViewService
     ],
     bootstrap: [AppComponent]
 })

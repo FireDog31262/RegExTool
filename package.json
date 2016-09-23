@@ -46,7 +46,7 @@
     "gulp-typescript": "^2.13.6",
     "lite-server": "^2.2.2",
     "path": "^0.12.7",
-    "typescript": "^2.1.0-dev.20160817",
+    "typescript": "^2.1.0-dev.20160923",
     "typings": "^1.3.3"
   }
 }

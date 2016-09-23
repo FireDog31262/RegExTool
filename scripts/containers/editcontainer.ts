@@ -15,11 +15,10 @@ import {HighLightService} from '../services/highLight.service';
         .libView {
             display: block;
             width: 19.3%;
-            height: calc(100vh - 36px);
+            height: calc(100vh - 59px);
             float: left;
             background: #25262c;
             color: white;
-            padding: 5px;
         }
     `],
     directives: [
