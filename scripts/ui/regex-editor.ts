@@ -72,6 +72,7 @@ export class RegExEditor {
     hiLiter: HighLightService;
 
     constructor(
+        public elementRef: ElementRef,
         private cmService: CodemirrorService,
         private hiliteService: HighLightService
     ) { }

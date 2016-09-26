@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter, ElementRef } from '@angular/core';
 import {LibraryViewService} from '../services/libView.service';
 
 @Component({
@@ -8,6 +8,9 @@ import {LibraryViewService} from '../services/libView.service';
         .header span {
             display: block;
             float: right;
+            cursor: pointer;
+        }
+        .showPointer {
             cursor: pointer;
         }
         .list {
@@ -27,21 +30,26 @@ import {LibraryViewService} from '../services/libView.service';
             color: #9699a6;
         }
         .list ul li:hover { color: white; }
-        .desc, .example { 
+        .desc { 
+            overflow-y: auto; 
             padding: 20px;
             font-size: 0.75rem; 
             color: #9699a6;
         }
-        .desc { overflow-y: auto; }
-        .example { padding: 0 10px; }
-        .desc ul { padding: 0; }
-        .desc b, .desc ul li b { color: #bfc1c9; }
+        :host >>> ul { padding: 10px; }
+        :host >>> b { color: #bfc1c9; }
+        .example { 
+            padding: 0 10px; 
+            font-size: 0.75rem; 
+            color: #9699a6;
+        }
+        .example p { margin-top: 0; }
     `],
     template: `
-        <div class="header" (click)="showParent(currentView)">
+        <div class="header" [ngClass]="{'showPointer': currentView.parent}" (click)="showParent(currentView)">
             <i *ngIf="currentView.parent" [ngStyle]="{'margin-right': '3px'}"><</i>
             {{currentView.label}}
-            <span>-</span>
+            <span (click)="toggleLibraryView()">-</span>
         </div>
         <div class="list">
             <ul>
@@ -55,7 +63,16 @@ import {LibraryViewService} from '../services/libView.service';
         <div class="desc" [innerHTML]="description"></div>
         <div class="example" *ngIf="example">
             <p>Click the <span class='icon'>&#xE212;</span> beside an example to load it.</p>
-
+            <div *ngIf="example">
+                <div>
+                    {{example[EXAMPLE_EXPRESSION]}}  
+                    <span class='icon'>&#xE212;</span>
+                </div>
+                <div>
+                    {{example[EXAMPLE_TEXT]}}
+                    <span class='icon'>&#xE212;</span>
+                </div>
+            </div>
         </div>
     `
 })
@@ -63,8 +80,12 @@ export class LibraryView {
     currentView: any;
     description: string;
     example: any;
+    private EXAMPLE_EXPRESSION: number = 0;
+    private EXAMPLE_TEXT: number = 1;
+    @Output() toggleView = new EventEmitter();
 
-    constructor(private libViewService: LibraryViewService) {
+    constructor(public elementRef: ElementRef, 
+                private libViewService: LibraryViewService) {
         this.currentView = libViewService.documentation;
         this.description = this.currentView.desc;
     } 
@@ -81,6 +102,12 @@ export class LibraryView {
     showParent (view) {
         if(view.parent) {
             this.currentView = view.parent;
+            this.description = this.currentView.desc;
+            this.example = this.currentView.example;
         }
+    }
+
+    toggleLibraryView () {
+        this.toggleView.emit(null);
     }
 }

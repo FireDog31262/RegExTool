@@ -5,7 +5,16 @@ export class LibraryViewService {
     documentation: any = {
         label: "Library",
         desc: `
-            <div><b>RegExr is an online tool to <b>learn</b>, <b>build</b>, &amp; <b>test</b> Regular Expressions (RegEx / RegExp).</b><hr><ul><li>Results update in <b>real-time</b> as you type.</li><li><b>Roll over</b> a match or expression for details.</li><li><b>Save</b> &amp; <b>share</b> expressions with others.</li><li>Use <b>Tools</b> to explore your results.</li><li>Browse the <b>Library</b> for help &amp; examples.</li><li><b>Undo</b> &amp; <b>Redo</b> with Ctrl-Z / Y.</li><li>Search for &amp; rate <b>Community</b> patterns.</li></ul></div>
+            <div><b>RegExr is an online tool to <b>learn</b>, <b>build</b>, &amp; <b>test</b> Regular Expressions (RegEx / RegExp).</b><hr>
+            <ul>
+                <li>Results update in <b>real-time</b> as you type.</li>
+                <li><b>Roll over</b> a match or expression for details.</li>
+                <li><b>Save</b> &amp; <b>share</b> expressions with others.</li>
+                <li>Use <b>Tools</b> to explore your results.</li>
+                <li>Browse the <b>Library</b> for help &amp; examples.</li>
+                <li><b>Undo</b> &amp; <b>Redo</b> with Ctrl-Z / Y.</li>
+                <li>Search for &amp; rate <b>Community</b> patterns.</li>
+            </ul></div>
         `,
         kids: [
             {
