@@ -63,6 +63,7 @@ import {HighLightService} from '../services/highLight.service';
     `
 })
 export class RegExEditor {
+    @Input() model: any;
     @Input() matches: Observable<any>;
     @Output() getMatches = new EventEmitter();
     expression = new FormControl();
@@ -77,20 +78,20 @@ export class RegExEditor {
         private hiliteService: HighLightService
     ) { }
 
-    model = {
-        Expression: '[A-Z]\\w+',
-        Text: `Welcome to the Regular Expression Tool!
+//     public model = {
+//         Expression: '[A-Z]\\w+',
+//         Text: `Welcome to the Regular Expression Tool!
 
-Edit the Expression & Text to see matches.
+// Edit the Expression & Text to see matches.
 
-This is Sample text for testing:
-abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ
-0123456789 _+-.,!@#$%^&*();\/|<>"'
-12345 -98.7 3.141 .6180 9,000 +42
-555.123.4567	+1-(800)-555-2468
-foo@demo.net	bar.ba@test.co.uk
-www.demo.com	http://foo.co.uk/`
-    }
+// This is Sample text for testing:
+// abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ
+// 0123456789 _+-.,!@#$%^&*();\/|<>"'
+// 12345 -98.7 3.141 .6180 9,000 +42
+// 555.123.4567	+1-(800)-555-2468
+// foo@demo.net	bar.ba@test.co.uk
+// www.demo.com	http://foo.co.uk/`
+//     }
 
     ngOnInit() {
         this.expression.valueChanges

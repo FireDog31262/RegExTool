@@ -5,11 +5,6 @@ import {LibraryViewService} from '../services/libView.service';
     selector: 'lib-view',
     styles: [`
         .header { padding: 10px; }
-        .header span {
-            display: block;
-            float: right;
-            cursor: pointer;
-        }
         .showPointer {
             cursor: pointer;
         }
@@ -44,12 +39,12 @@ import {LibraryViewService} from '../services/libView.service';
             color: #9699a6;
         }
         .example p { margin-top: 0; }
+        .clickable span.icon { float: right; }
     `],
     template: `
         <div class="header" [ngClass]="{'showPointer': currentView.parent}" (click)="showParent(currentView)">
             <i *ngIf="currentView.parent" [ngStyle]="{'margin-right': '3px'}"><</i>
             {{currentView.label}}
-            <span (click)="toggleLibraryView()">-</span>
         </div>
         <div class="list">
             <ul>
@@ -63,14 +58,14 @@ import {LibraryViewService} from '../services/libView.service';
         <div class="desc" [innerHTML]="description"></div>
         <div class="example" *ngIf="example">
             <p>Click the <span class='icon'>&#xE212;</span> beside an example to load it.</p>
-            <div *ngIf="example">
+            <div class="clickable" *ngIf="example">
                 <div>
                     {{example[EXAMPLE_EXPRESSION]}}  
-                    <span class='icon'>&#xE212;</span>
+                    <span (click)="onUpdateExpression(example[EXAMPLE_EXPRESSION])" class='icon'>&#xE212;</span>
                 </div>
                 <div>
                     {{example[EXAMPLE_TEXT]}}
-                    <span class='icon'>&#xE212;</span>
+                    <span (click)="onUpdateText(example[EXAMPLE_TEXT])" class='icon'>&#xE212;</span>
                 </div>
             </div>
         </div>
@@ -82,10 +77,10 @@ export class LibraryView {
     example: any;
     private EXAMPLE_EXPRESSION: number = 0;
     private EXAMPLE_TEXT: number = 1;
-    @Output() toggleView = new EventEmitter();
+    @Output() UpdateExpression = new EventEmitter();
+    @Output() UpdateText = new EventEmitter();
 
-    constructor(public elementRef: ElementRef, 
-                private libViewService: LibraryViewService) {
+    constructor(private libViewService: LibraryViewService) {
         this.currentView = libViewService.documentation;
         this.description = this.currentView.desc;
     } 
@@ -107,7 +102,11 @@ export class LibraryView {
         }
     }
 
-    toggleLibraryView () {
-        this.toggleView.emit(null);
+    onUpdateExpression (expression: string) {
+        this.UpdateExpression.emit(expression);
+    }
+
+    onUpdateText (text: string) {
+        this.UpdateText.emit(text);
     }
 }

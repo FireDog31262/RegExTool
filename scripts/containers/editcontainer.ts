@@ -26,17 +26,32 @@ import {HighLightService} from '../services/highLight.service';
         LibraryView
     ],
     template:`
-        <lib-view #libView class="libView" (toggleView)="toggleLibView()"></lib-view>
+        <lib-view #libView  class="libView"
+            (UpdateExpression)="onUpdateExpression($event)"
+            (UpdateText)="onUpdateText($event)"></lib-view>
         <regex-editor #editorView class="regexEditor" 
             (getMatches)="onGetMatches($event)"
-            [matches]="matches"></regex-editor>
+            [matches]="matches"
+            [model]="model"></regex-editor>
     `
 })
 export class EditContainer {
     matches = [];
     hiLiter: HighLightService;
-    @ViewChild('libView') libView: ElementRef;
-    @ViewChild('editorView') editorView: ElementRef;
+    model = {
+        Expression: '[A-Z]\\w+',
+        Text: `Welcome to the Regular Expression Tool!
+
+Edit the Expression & Text to see matches.
+
+This is Sample text for testing:
+abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ
+0123456789 _+-.,!@#$%^&*();\/|<>"'
+12345 -98.7 3.141 .6180 9,000 +42
+555.123.4567	+1-(800)-555-2468
+foo@demo.net	bar.ba@test.co.uk
+www.demo.com	http://foo.co.uk/`
+    }
 
     constructor(private service: RegExService) {}
 
@@ -52,8 +67,11 @@ export class EditContainer {
             });
     }
 
-    toggleLibView () {
-        // var lv = this.libView.location;
-        debugger;
+    onUpdateExpression(expression: string) {
+        this.model.Expression = expression;
+    }
+
+    onUpdateText(text: string){
+        this.model.Text = text;
     }
 }
