@@ -39,7 +39,10 @@ import {LibraryViewService} from '../services/libView.service';
             color: #9699a6;
         }
         .example p { margin-top: 0; }
-        .clickable span.icon { float: right; }
+        .clickable span.icon { 
+            float: right; 
+            cursor: pointer; 
+        }
     `],
     template: `
         <div class="header" [ngClass]="{'showPointer': currentView.parent}" (click)="showParent(currentView)">

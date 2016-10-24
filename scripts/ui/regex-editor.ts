@@ -4,7 +4,9 @@ import {
     Output, 
     EventEmitter,
     ViewChild,
-    ElementRef
+    ElementRef,
+    DoCheck,
+    KeyValueDiffers
 } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
@@ -62,42 +64,48 @@ import {HighLightService} from '../services/highLight.service';
         </form>
     `
 })
-export class RegExEditor {
+export class RegExEditor implements DoCheck {
     @Input() model: any;
     @Input() matches: Observable<any>;
     @Output() getMatches = new EventEmitter();
+    txtCursorPos: any;
     expression = new FormControl();
     myCodeMirror: any;
     @ViewChild('text') myTextArea: ElementRef;
     @ViewChild('canvas') canvas: ElementRef;
     hiLiter: HighLightService;
+    differ: any;
 
     constructor(
         public elementRef: ElementRef,
         private cmService: CodemirrorService,
-        private hiliteService: HighLightService
-    ) { }
+        private hiliteService: HighLightService,
+        private differs: KeyValueDiffers
+    ) { 
+        this.differ = differs.find({}).create(null);
+    }
 
-//     public model = {
-//         Expression: '[A-Z]\\w+',
-//         Text: `Welcome to the Regular Expression Tool!
-
-// Edit the Expression & Text to see matches.
-
-// This is Sample text for testing:
-// abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ
-// 0123456789 _+-.,!@#$%^&*();\/|<>"'
-// 12345 -98.7 3.141 .6180 9,000 +42
-// 555.123.4567	+1-(800)-555-2468
-// foo@demo.net	bar.ba@test.co.uk
-// www.demo.com	http://foo.co.uk/`
-//     }
+    ngDoCheck() {
+        var changes = this.differ.diff(this.model);
+        if(changes) {
+            changes.forEachChangedItem(function(c) {
+                if(c.key === 'Text') {
+                    this.hiLiter.clear();
+                    this.myCodeMirror.setValue(c.currentValue);
+                }
+            }.bind(this))
+            if (this.myCodeMirror && this.txtCursorPos) {
+                this.myCodeMirror.setCursor(this.txtCursorPos);
+            }
+        }
+    }
 
     ngOnInit() {
         this.expression.valueChanges
             .debounceTime(500)
             .distinctUntilChanged()
             .subscribe((expression: string) => {
+                this.txtCursorPos = this.myCodeMirror.getCursor(true);
                 this.hiLiter.clear();
                 if(expression.length > 3) {
                     this.hiLiter.setCanvasSize();
@@ -113,12 +121,13 @@ export class RegExEditor {
         Observable.fromEvent(this.myTextArea.nativeElement, 'change')
             .debounceTime(500)
             .subscribe((event: any) => {
+                this.txtCursorPos = this.myCodeMirror.getCursor(true);
                 this.hiLiter.clear();
                 this.hiLiter.setCanvasSize();
                 this.model.Text = (<HTMLTextAreaElement>event.target).value;
                 this.getMatches.emit({filter: this.model, hiLiter: this.hiLiter});
             });
-        
+
         // debugger;
         //setup the codemirror editor
         this.myCodeMirror = CodeMirror.fromTextArea(

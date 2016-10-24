@@ -36,6 +36,7 @@ import {HighLightService} from '../services/highLight.service';
     `
 })
 export class EditContainer {
+    @ViewChild(RegExEditor) editor;
     matches = [];
     hiLiter: HighLightService;
     model = {
@@ -72,6 +73,7 @@ www.demo.com	http://foo.co.uk/`
     }
 
     onUpdateText(text: string){
+        this.editor.txtCursorPos = null;
         this.model.Text = text;
     }
 }
