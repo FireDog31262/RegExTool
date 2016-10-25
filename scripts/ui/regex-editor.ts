@@ -4,9 +4,7 @@ import {
     Output, 
     EventEmitter,
     ViewChild,
-    ElementRef,
-    DoCheck,
-    KeyValueDiffers
+    ElementRef
 } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs/Observable';
@@ -64,7 +62,7 @@ import {HighLightService} from '../services/highLight.service';
         </form>
     `
 })
-export class RegExEditor implements DoCheck {
+export class RegExEditor {
     @Input() model: any;
     @Input() matches: Observable<any>;
     @Output() getMatches = new EventEmitter();
@@ -80,25 +78,7 @@ export class RegExEditor implements DoCheck {
         public elementRef: ElementRef,
         private cmService: CodemirrorService,
         private hiliteService: HighLightService,
-        private differs: KeyValueDiffers
-    ) { 
-        this.differ = differs.find({}).create(null);
-    }
-
-    ngDoCheck() {
-        var changes = this.differ.diff(this.model);
-        if(changes) {
-            changes.forEachChangedItem(function(c) {
-                if(c.key === 'Text') {
-                    this.hiLiter.clear();
-                    this.myCodeMirror.setValue(c.currentValue);
-                }
-            }.bind(this))
-            if (this.myCodeMirror && this.txtCursorPos) {
-                this.myCodeMirror.setCursor(this.txtCursorPos);
-            }
-        }
-    }
+    ) {}
 
     ngOnInit() {
         this.expression.valueChanges

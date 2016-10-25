@@ -73,7 +73,9 @@ www.demo.com	http://foo.co.uk/`
     }
 
     onUpdateText(text: string){
+        this.editor.hiLiter.clear();
         this.editor.txtCursorPos = null;
         this.model.Text = text;
+        this.editor.myCodeMirror.setValue(text);
     }
 }
