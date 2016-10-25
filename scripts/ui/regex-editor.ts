@@ -87,7 +87,7 @@ export class RegExEditor {
             .subscribe((expression: string) => {
                 this.txtCursorPos = this.myCodeMirror.getCursor(true);
                 this.hiLiter.clear();
-                if(expression.length > 3) {
+                if(expression.length > 1) {
                     this.hiLiter.setCanvasSize();
                     this.model.Expression = expression;
                     this.getMatches.emit({filter: this.model, hiLiter: this.hiLiter});
