@@ -5,7 +5,7 @@ export class LibraryViewService {
     documentation: any = {
         label: "Library",
         desc: `
-            <div><b>RegExr is an online tool to <b>learn</b>, <b>build</b>, &amp; <b>test</b> Regular Expressions (RegEx / RegExp).</b><hr>
+            <div><b>The Regular Expression Tool is an online tool to <b>learn</b>, <b>build</b>, &amp; <b>test</b> Regular Expressions (RegEx / RegExp).</b><hr>
             <ul>
                 <li>Results update in <b>real-time</b> as you type.</li>
                 <li><b>Roll over</b> a match or expression for details.</li>

@@ -24,13 +24,15 @@ gulp.task("scriptsNStyles", () => {
         'jquery/dist/jquery.*js',
         'bootstrap/dist/js/bootstrap*.js',
         'codemirror/**',
-        'clipboard/dist/*.min.js'
+        'clipboard/dist/*.min.js',
+        'toastr/build/*.min.js'
     ], {
         cwd: "node_modules/**"
     }).pipe(gulp.dest("./wwwroot/libs"));
 
     gulp.src([
         'node_modules/bootstrap/dist/css/bootstrap.css',
+        'node_modules/toastr/build/*.min.css',
         'css/*.css'
     ]).pipe(gulp.dest('./wwwroot/libs/css'));
 

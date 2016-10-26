@@ -145,7 +145,15 @@ export class RegExEditor {
 
         this.getMatches.emit({filter: this.model, hiLiter: this.hiLiter});
 
-        new Clipboard('.copy');
+        var clipboard = new Clipboard('.copy');
+        clipboard.on('success', function(e) {
+            debugger;
+            console.info('Action:', e.action);
+            console.info('Text:', e.text);
+            console.info('Trigger:', e.trigger);
+
+            e.clearSelection();
+        });
     }
 
     // CopyToClipboard () {
