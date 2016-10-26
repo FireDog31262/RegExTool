@@ -23,6 +23,11 @@ import {HighLightService} from '../services/highLight.service';
         .title {
             background: #5CC;
             color: 000;
+            padding-right: 50px;
+        }
+        .title .icon { 
+            float: right; 
+            cursor: pointer;
         }
         .textTitle {
             background: #CCC;
@@ -49,9 +54,12 @@ import {HighLightService} from '../services/highLight.service';
     `],
     template: `
         <form>
-            <div class="title">Expression</div>
+            <div class="title">
+            Expression
+            <span class="icon copy" data-clipboard-target="#Expression" alt="Copy Expression to clipboard">&#xe205;</span>
+            </div>
             <div class="expression">
-                <input [(ngModel)]="model.Expression" [formControl]="expression"/>
+                <input id="Expression" [(ngModel)]="model.Expression" [formControl]="expression"/>
                 <div class="matches" *ngIf="matches.length">{{matches.length}} matches</div>
             </div>
             <div class="textTitle">Text</div>
@@ -87,7 +95,7 @@ export class RegExEditor {
             .subscribe((expression: string) => {
                 this.txtCursorPos = this.myCodeMirror.getCursor(true);
                 this.hiLiter.clear();
-                if(expression.length > 1) {
+                if(expression.length > 0) {
                     this.hiLiter.setCanvasSize();
                     this.model.Expression = expression;
                     this.getMatches.emit({filter: this.model, hiLiter: this.hiLiter});
@@ -136,7 +144,13 @@ export class RegExEditor {
             });
 
         this.getMatches.emit({filter: this.model, hiLiter: this.hiLiter});
+
+        new Clipboard('.copy');
     }
+
+    // CopyToClipboard () {
+    //     debugger;
+    // }
 
     //testing purposes
     // ngDoCheck() { console.log('change detection'); }

@@ -23,16 +23,20 @@ gulp.task("scriptsNStyles", () => {
         '@angular/**',
         'jquery/dist/jquery.*js',
         'bootstrap/dist/js/bootstrap*.js',
-        'codemirror/**'
+        'codemirror/**',
+        'clipboard/dist/*.min.js'
     ], {
         cwd: "node_modules/**"
-    })
-    .pipe(gulp.dest("./wwwroot/libs"));
+    }).pipe(gulp.dest("./wwwroot/libs"));
 
     gulp.src([
         'node_modules/bootstrap/dist/css/bootstrap.css',
         'css/*.css'
     ]).pipe(gulp.dest('./wwwroot/libs/css'));
+
+    // gulp.src([
+    //     'css/fonts/*.*'
+    // ]).pipe(gulp.dest('./wwwroot/libs/css/fonts'));
 });
 
 //ts - task to transpile TypeScript files to JavaScript using Gulp-TypeScript 
