@@ -147,19 +147,8 @@ export class RegExEditor {
 
         var clipboard = new Clipboard('.copy');
         clipboard.on('success', function(e) {
-            debugger;
-            console.info('Action:', e.action);
-            console.info('Text:', e.text);
-            console.info('Trigger:', e.trigger);
-
-            e.clearSelection();
-        });
+            this.myCodeMirror.focus();
+            toastr.success('Expression successfully copied to the Clipboard!');
+        }.bind(this));
     }
-
-    // CopyToClipboard () {
-    //     debugger;
-    // }
-
-    //testing purposes
-    // ngDoCheck() { console.log('change detection'); }
 }

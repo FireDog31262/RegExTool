@@ -18,4 +18,15 @@ import {Main} from './containers';
         <main-container class=mainContainer></main-container>
     `
 })
-export class AppComponent {}
+export class AppComponent {
+    ngOnInit() {
+        toastr.options = {
+            "positionClass": "toast-bottom-right",
+            "timeOut": 1500,
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "slideDown",
+            "hideMethod": "fadeOut"
+        };
+    }
+}
