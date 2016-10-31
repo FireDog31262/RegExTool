@@ -22,17 +22,10 @@ export class LibraryViewService {
                 icon: "&#xe085;",
                 desc: "Help for the RegExr application. See the <b>Reference</b> for help with Regular Expressions.",
                 kids: [
-
-                    {
-                        label: "Video Tutorial",
-                        desc: "Check out the three minute video tutorial for a quick introduction to all the features of RegExr." +
-                        "<p><a href='javascript:regexr.showVideo();'>Click here</a> to watch the video.</p>"
-                    },
                     {
                         label: "About",
                         desc: "Created by <a href='http://twitter.com/gskinner/' target='_blank'>Grant Skinner</a> & the <a href='http://gskinner.com/' target='_blank'>gskinner</a> team, using the <a href='http://createjs.com/' target='_blank'>CreateJS</a> & <a href='http://codemirror.net/' target='_blank'>CodeMirror</a> libraries." +
                         "<p>You can provide feedback, log bugs, or access the source code of RegExr on <a href='http://github.com/gskinner/regexr/' target='_blank'>GitHub</a>.</p>" +
-                        // "Want to support RegExr updates, or buy us a beer as thanks? Feel free to <a href='#' target='_blank'>donate</a>."+ // TODO: link.
                         "<p>RegExr v1 is still online at <a href='v1/' target='_blank'>regexr.com/v1/</a>.</p>"
                     },
                     {

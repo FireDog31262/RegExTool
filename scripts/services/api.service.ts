@@ -15,7 +15,6 @@ export class ApiService {
     constructor(private http: Http) {}
 
     private getJson(response: Response) {
-         
         return response.json();
     }
 
